@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{% if (app.request.attributes.get('_route')=="admin_sceance_ajout") %}
+    Ajout
+{% else %}
+    modification
+{% endif %}
+d'une sceance{% endblock %}
+
+{% block body %}
+<h1 clas="pt-2 text-center">
+{% if (app.request.attributes.get('_route')=="admin_seance_ajout") %}
+    Ajout
+{% else %}
+    Modification
+{% endif %}
+d'une seance</h1>
+
+{{form_start(formSeance,{'attr':{'novalidate':'novalidate'}})}}
+
+<div class="row">
+    <div class="col d-flex justify-content-center">{{form_row(formSeance.date)}}</div>
+    <div class="col d-flex justify-content-center">{{form_row(formSeance.film)}}</div>
+</div>
+
+<div class="row">
+    <div class="col d-flex justify-content-center">{{form_row(formSeance.heure)}}</div>
+    <div class="col d-flex justify-content-center">{{form_row(formSeance.salle)}}</div>
+</div>
+
+
+<div class="row">
+    <div class="col"><a href=" {{ path('admin_seances')}} "class="btn btn-danger btn-block"><i class="fas fa-undo-alt"></i> Annuler</a>
+</div>
+    <div class="col"><input type="submit" class="btn btn-success btn-block" value=
+    {% if (app.request.attributes.get('_route')=="admin_seance_ajout") %}
+        "Ajouter"
+    {% else %}
+        "Modifier"
+    {% endif %}
+    ></div>
+</div>
+
+{{form_end(formSeance)}}
+
+{% endblock %}
+{#
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>$(document).ready(function() {$('.selectStyles').select2();});</script>
+    <script src=" {{asset("js/gestionUpload.js")}} " defer ></script>
+    
+{% endblock %}
+#}

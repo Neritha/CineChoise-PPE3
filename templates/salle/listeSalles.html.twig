@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Salles{% endblock %}
+
+{% block body %}
+
+<h1 class="pt-2 text-center">Liste des Salles</h1>
+<hr>
+<div class="row pt-2">
+
+    {% for key, laSalle in lesSalles %}
+
+    <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+        <div class="card mb-3">
+            <h4 class="card-header" align="center"> <a href="{{path('salle_fiche', {'id': laSalle.id})}}">{{laSalle.nom}}</a></h4>
+            <div class="card-body">
+                <ul class="list-group list-group-flush text-left">
+                    <li class="list-group-item pl-4">capaciter : {{laSalle.capaciter}}.</li>
+                    <li class="list-group-item pl-4">
+
+                    {% if laSalle.sessions|length == 0 %}
+                            Pas de séance associé
+                        {% else %}
+                            {% if laSalle.sessions|length > 1 %}
+                                Séances associées :
+                            {% else %}
+                                Séance associé :
+                            {% endif %}
+                                {% for laSeance in laSalle.sessions %} 
+                                    <span class="badge" style="background-color: black; font-size:1rem;">
+                                        <a href="{{path('seance_fiche', {'id': laSeance.id})}}">
+                                            N°{{laSeance.id}}
+                                        </a>
+                                    </span> 
+                                {% endfor %}
+                        {% endif %}      
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    {#
+
+    <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+        <div class="card mb-3">
+            <h4 class="card-header" align="center"><a href="">{{laSalle.nom}}</a></h4> 
+
+            <div class="card-body text-center">
+                <p class="card-text">La capacité de la salle est de {{laSalle.capaciter}} places</p>
+            </div>
+
+        </div>
+    </div>
+#}
+    {% endfor %} 
+
+    <div class="navigation mx-auto">
+        {{ knp_pagination_render(lesSalles) }}
+    </div>
+
+</div>
+
+{% endblock %}

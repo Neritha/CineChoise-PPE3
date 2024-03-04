@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fiche du film{% endblock %}
+
+{% block body %}
+<h1 class="pt-3 text-center">Fiche du film</h1>
+<hr>
+<a href="{{path('films')}}" class="btn btn-success"><i class="fas fa-undo-alt"></i> Revenir à la liste des films</a>
+<hr>
+
+<div class="card text-white bg-secondary mb-3">
+  <div class="card-body">
+    <h3 class="card-title">{{leFilm.nom}}</h3>
+
+    <div class="row">
+      <div class="col-4">
+        <img class="avatar mx-auto d-block" style="height: auto; width: 20rem; display: block;" src="{{asset("images/affiches/" ~ leFilm.affiche)}}" alt="Affiche du film">
+      </div>
+      <div class="col-8">
+        <ul class="list-group list-group-flush text-left">
+          <li class="list-group-item pl-4"><i class="fa-solid fa-book"></i> : <span style="font-size: 1.2rem">{{leFilm.description}}</span></li>
+          <li class="list-group-item pl-4"><i class="fa-solid fa-right-to-bracket"></i> : {{leFilm.date}}</li>   
+          <li class="list-group-item pl-4"><i class="fa-regular fa-clock"></i> : {{leFilm.duree}}</li>   
+
+          <li class="list-group-item pl-4">
+          <i class="fa-solid fa-calendar-check"></i>: 
+            {% if leFilm.sessions|length > 0 %}
+              {% for laSeance in leFilm.sessions %} 
+                <span class="badge" style="background-color: black; font-size: 1.3rem"> <a href="{{path('seance_fiche', {'id': laSeance.id})}}"> N°{{laSeance.id}}</a></span> 
+              {% endfor %} 
+            {% else %}
+              Pas de séances de projection pour ce film
+            {% endif %}
+          </li>
+
+          <li class="list-group-item pl-4">
+            <i class="fa-solid fa-tag"></i> : 
+            {% if leFilm.categories|length > 0 %}
+              <div class="row">
+                {% for laCategorie in leFilm.categories %} 
+                  <div class="col-6">
+                    <div class="card border-primary mb-3" style="max-width: 20rem;">
+                      <div class="card-body">
+                        <h5 class="card-title"><span class="badge badge" style="background-color: {{laCategorie.couleur}};"> {{laCategorie.nom}}</span> </h5>
+                        <p class="card-text">{{laCategorie.description}}</p>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% else %}
+              Ce filme ne possède pas de categorie associé
+            {% endif %}
+          </li>
+          
+        </ul>
+      
+      </div>
+    {#
+    </div>
+
+    <ul class="list-group list-group-flush text-left">
+        <li class="list-group-item pl-4"><u>description</u> : {{leFilm.description}}</li>
+        <li class="list-group-item pl-4"></li>
+        <li class="list-group-item pl-4"><u>affiche du film</u> : <img class="avatar mx-auto d-block" style="height: auto; width: 80px; display: block;" src="{{asset("images/affiches/" ~ leFilm.affiche)}}" alt="Affiche du film"></li>
+        <li class="list-group-item pl-4">
+          <u>categorie(s)</u> : 
+
+          <div class="row">
+            {% for laCategorie in leFilm.categories %} 
+              <div class="col-4">
+                <div class="card border-primary mb-3" style="max-width: 20rem;">
+                  <div class="card-header">Header</div>
+                  <div class="card-body">
+                    <h4 class="card-title"><span class="badge badge" style="background-color: {{laCategorie.couleur}};"> {{laCategorie.nom}}</span> </h4>
+                    <p class="card-text"><u>description</u> : {{laCategorie.description}}</p>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+      </li>
+
+      <li class="list-group-item pl-4"><u>séance(s)</u> : {% for laSeance in leFilm.sessions %} <span class="badge" style="background-color: black"> <a href="{{path('seance_fiche', {'id': laSeance.id})}}">N°{{laSeance.id}}</a></span> {% endfor %} </li>
+#}
+    </ul>
+
+  </div>
+</div>
+
+
+{% endblock %}

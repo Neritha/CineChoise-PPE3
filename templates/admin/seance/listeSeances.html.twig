@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Séances | Admin{% endblock %}
+
+{% block body %}
+    <h1 class="pt-2 text-center">Gestion des Séances | Admin</h1>
+    
+    <div class="row pt-2">
+
+        <a href=" {{ path("admin_seance_ajout")}} " class="btn btn-success mx-auto m-3"><i class="fas fa-plus"></i> Ajouter une seance</a>
+
+        
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col-2">date</th>
+                    <th scope="col-2">heure</th>
+                    <th scope="col-4">film</th>
+                    <th scope="col-2">salle</th>
+                    <th scope="col-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for laSeance in lesSeances %}
+
+                        <tr class="table-secondary">
+                            <td class="col-2">{{laSeance.date}}</td>
+                            <td class="col-2">{{laSeance.heure}}</td>
+                            <td class="col-4">{{laSeance.film.nom}}</td>
+                            <td class="col-2">{{laSeance.salle.nom}}</td>
+                            <td class="col-2">
+                            
+                            <a href="{{path('admin_seance_modif', {'id': laSeance.id})}}" class="btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></a>
+
+                            <a class="btn btn-danger" data-toggle="modal" data-target="#modalSimple" data-titre="Suppression d'une sceance" data-message="Êtes vous sûr de vouloir supprimer la sceance : {{laSeance.id}}" data-libelleBouton="Supprimer" data-lien="{{path('admin_sceance_supr', {'id': laSeance.id})}}"><i class="fa-regular fa-trash-can"></i></a>
+
+                            </td>
+
+                {% endfor %}
+
+ 
+
+            </tbody>
+        </table>
+        <div class="navigation mx-auto">
+            {{ knp_pagination_render(lesSeances) }}
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {% include "include/_modale.html.twig" %}
+{% endblock %}

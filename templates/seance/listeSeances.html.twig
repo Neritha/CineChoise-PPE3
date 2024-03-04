@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Séances{% endblock %}
+
+{% block body %}
+
+    <h1 class="pt-2 text-center">Liste des Séances</h1>
+    <hr>
+    <div class="row pt-2">
+
+        {% for laSeance in lesSeances %}
+
+            <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                <div class="card mb-3">
+                    <h4 class="card-header"><a href="{{path('seance_fiche', {'id': laSeance.id})}}">{{laSeance.name}}</a></h4>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush text-left">
+
+                            <li class="list-group-item pl-4">
+
+                                <a href="{{path('film_fiche', {'id': laSeance.film.id})}}">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img 
+                                            class="avatar mx-auto d-block m-1" 
+                                            style="height: auto; width: 80px; display: block;" 
+                                            src="{{ asset('images/affiches/' ~ laSeance.film.affiche) }}" 
+                                            alt="Affiche du film">
+                                        </div>
+
+                                        <div class="col-8 d-flex justify-content-center align-items-center">
+                                            <p style = "font-size: 1.3rem;" class="m-1">{{laSeance.film.nom}}</p>
+                                        </div>
+                                    </div>
+                                </a>           
+                                
+                            </li>
+
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col"><i class="far fa-calendar-alt"></i> : {{laSeance.date}}</div>
+                                    <div class="col"><i class="far fa-clock"></i> : {{laSeance.heure}}</div>
+                                </div>
+                            </li>
+                            <a href="{{path('salle_fiche', {'id': laSeance.salle.id})}}"><li class="list-group-item text-center"><i class="fas fa-map-marker-alt"></i> : {{laSeance.salle.nom}}</li>                   </a>
+                            
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %} 
+
+    <div class="navigation mx-auto">
+        {{ knp_pagination_render(lesSeances) }}
+    </div>
+
+    </div>
+
+{% endblock %}

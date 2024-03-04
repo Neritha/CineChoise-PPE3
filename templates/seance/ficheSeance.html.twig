@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fiche de la séance{% endblock %}
+
+{% block body %}
+    <h1 class="pt-3 text-center">Fiche de la séance</h1>
+    <hr>
+    <a href="{{path('seances')}}" class="btn btn-success"><i class="fas fa-undo-alt"></i> Revenir à la liste des séances</a>
+    <hr>
+
+    <div class="card text-white bg-secondary mb-3">
+        <div class="card-body">
+            <h3 class="card-title">{{laSeance.name}}</h4>
+
+            <div class="row">
+                <div class="col-4">
+                    <a href="{{path('film_fiche', {'id': laSeance.film.id})}}">
+                        <img 
+                            class="avatar mx-auto d-block" 
+                            style="height: auto; width: 20rem; display: block;" 
+                            src="{{ asset('images/affiches/' ~ laSeance.film.affiche) }}" 
+                            alt="Affiche du film">
+                    </a>
+                </div>
+
+                <div class="col-8">
+                    <ul class="list-group list-group-flush text-left">
+                        <li class="list-group-item pl-4">
+                        <h4><a href="{{path('film_fiche', {'id': laSeance.film.id})}}">
+                            {{laSeance.film.nom}}
+                        </a></h4>
+
+
+                        </li>
+                        <li class="list-group-item pl-4"><i class="fas fa-map-marker-alt"></i> : <a href="{{path('salle_fiche', {'id': laSeance.salle.id})}}">{{laSeance.salle.nom}}</a></li>
+                        <li class="list-group-item pl-4"><i class="far fa-calendar-alt"></i> : {{laSeance.date}}</li>
+                        <li class="list-group-item pl-4"><i class="far fa-clock"></i> : {{laSeance.heure}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

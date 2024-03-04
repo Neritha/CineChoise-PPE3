@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{% if (app.request.attributes.get('_route')=="admin_salle_ajout") %}
+    Ajout
+{% else %}
+    modification
+{% endif %}
+d'une salle{% endblock %}
+
+{% block body %}
+<h1 clas="pt-2 text-center">
+{% if (app.request.attributes.get('_route')=="admin_salle_ajout") %}
+    Ajout
+{% else %}
+    Modification
+{% endif %}
+d'une salle</h1>
+
+{{form_start(formSalle,{'attr':{'novalidate':'novalidate'}})}}
+
+<div class="row">
+    <div class="col">{{form_row(formSalle.nom)}}</div>
+    <div class="col">{{form_row(formSalle.capaciter)}}</div>
+</div>
+
+
+<div class="row">
+    <div class="col"><a href=" {{ path('admin_salles')}} "class="btn btn-danger btn-block"><i class="fas fa-undo-alt"></i> Annuler</a>
+</div>
+    <div class="col"><input type="submit" class="btn btn-success btn-block" value=
+    {% if (app.request.attributes.get('_route')=="admin_salle_ajout") %}
+        "Ajouter"
+    {% else %}
+        "Modifier"
+    {% endif %}
+    ></div>
+</div>
+
+{{form_end(formSalle)}}
+
+{% endblock %}
+{#
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>$(document).ready(function() {$('.selectStyles').select2();});</script>
+    <script src=" {{asset("js/gestionUpload.js")}} " defer ></script>
+    
+{% endblock %}
+#}
